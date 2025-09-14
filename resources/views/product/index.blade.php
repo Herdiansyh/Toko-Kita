@@ -25,9 +25,11 @@
                     <div class="grid md:grid-cols-3 mt-3 gap-2 grid-cols-1">
                         @foreach ($products as $product)
                             <div>
-                                <img src="{{ url('storage/' . ($product->foto ?? 'noimage.png')) }}"
+                                <img src="{{ asset('storage/' . ($product->foto ?? 'noimage.png')) }}"
                                     alt="gambar {{ $product->nama }}">
-
+                                <script>
+                                    console.log("{{ $product->foto }}");
+                                </script>
                                 <p class="font-light text-xl"> {{ $product->nama }}</p>
                                 <p class="text-gray-500 text-md"> Rp. {{ number_format($product->harga) }}</p>
 

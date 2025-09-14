@@ -10,6 +10,7 @@ class ProductController extends Controller
     //
     public function index(){
         $products = Product::paginate(9);
+        
         return view ("product.index", compact ("products"));
     }
     public function create(){
@@ -21,17 +22,21 @@ class ProductController extends Controller
             "nama"=> "required",
             "harga"=> "required|numeric",
             "deskripsi"=> "nullable",
-            "foto" => "required|image|mimes:png,jpg"
-       ]);
+            "foto" => "required|image|mimes:png,jpg,jpeg"
+       ]);  
 
-       $foto = $request->file("foto");
-       $foto->storeAs('public', $foto->hashName());
+          // simpan foto ke folder storage/app/public/foto
+        $foto = $request->file("foto");
+        $path = $foto->store("foto", "public");
+
+        // masukkan ke database
         Product::create([
-        "nama"      => $validated["nama"],
-        "harga"     => $validated["harga"],
-        "deskripsi" => $validated["deskripsi"],
-        "foto"      => $foto->hashName(),
-    ]);
+            "nama"      => $validated["nama"],
+            "harga"     => $validated["harga"],
+            "deskripsi" => $validated["deskripsi"],
+            "foto"      => $path, // simpan path lengkapnya
+        ]);
+
       return redirect()->route("product.index")->with("success","add product success");
 
     }
