@@ -39,16 +39,7 @@
                                         <button
                                             class="w-full bg-gray-300 p-1 rounded-md text-lg font-light hover:bg-gray-200">Edit</button>
                                     </a>
-                                    <form id="delete-form-{{ $product->id }}"
-                                        action="{{ route('product.destroy', $product->id) }}" method="POST"
-                                        class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" onclick="confirmDelete({{ $product->id }})"
-                                            class="w-full bg-red-800 p-1 rounded-md mt-2 text-lg font-light hover:bg-red-700">
-                                            Hapus
-                                        </button>
-                                    </form>
+
 
                                 </div>
                             </div>
@@ -61,23 +52,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Yakin hapus produk ini?',
-                text: "Data yang sudah dihapus tidak bisa dikembalikan.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, hapus',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            });
-        }
-    </script>
+
 
 </x-app-layout>

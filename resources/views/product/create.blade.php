@@ -9,6 +9,15 @@
     <div class="py-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <form id="delete-form-{{ $product->id }}" action="{{ route('product.destroy', $product->id) }}"
+                    method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" onclick="confirmDelete({{ $product->id }})"
+                        class="w-full bg-red-800 p-1 rounded-md mt-2 text-lg font-light hover:bg-red-700">
+                        Hapus
+                    </button>
+                </form>
                 <div class="p-6 text-gray-900 ">
                     <form action="{{ route('product.store') }}" enctype="multipart/form-data" method="POST"
                         class="flex gap-8" x-data="{ imageUrl: '/storage/noimage.png' }">
@@ -54,4 +63,22 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Yakin hapus produk ini?',
+                text: "Data yang sudah dihapus tidak bisa dikembalikan.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 </x-app-layout>
